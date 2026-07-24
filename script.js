@@ -51,10 +51,12 @@ function search() {
             course.id.includes(query) ||
             course.name.toLowerCase().includes(query)
         ) {
+
             filtered.push(course);
 
             if (filtered.length >= 100)
                 break;
+
         }
 
     }
@@ -67,8 +69,7 @@ function render(list) {
 
     if (list.length === 0) {
 
-        results.innerHTML =
-            `<div class="empty">No course found.</div>`;
+        results.innerHTML = `<div class="empty">No course found.</div>`;
 
         return;
 
@@ -79,48 +80,60 @@ function render(list) {
     list.forEach(course => {
 
         const card = document.createElement("div");
+
         card.className = "card";
 
         card.innerHTML = `
 
-        <h3>${course.name}</h3>
+            <h3>${course.name}</h3>
 
-        <p>Course ID : <strong>${course.id}</strong></p>
+            <p>Course ID : <strong>${course.id}</strong></p>
 
-        <div class="buttons">
+            <div class="buttons">
 
-        <button class="open">Open Course</button>
+                <button class="open">📖 Course</button>
 
-        <button class="copy">Copy Link</button>
+                <button class="module">📂 Modules</button>
 
-        </div>
+                <button class="copy-course">🔗 Copy Course</button>
+
+                <button class="copy-module">📋 Copy Modules</button>
+
+            </div>
 
         `;
 
+        const courseLink =
+            `https://nculms.ncuindia.edu/courses/${course.id}`;
+
+        const moduleLink =
+            `https://nculms.ncuindia.edu/courses/${course.id}/modules`;
+
+        // Open Course
         card.querySelector(".open").onclick = () => {
 
-            window.open(
-                `https://nculms.ncuindia.edu/courses/${course.id}`,
-                "_blank"
-            );
+            window.open(courseLink, "_blank");
 
         };
 
-        card.querySelector(".copy").onclick = () => {
+        // Open Modules
+        card.querySelector(".module").onclick = () => {
 
-            navigator.clipboard.writeText(
-                `https://nculms.ncuindia.edu/courses/${course.id}`
-            );
+            window.open(moduleLink, "_blank");
 
-            const btn = card.querySelector(".copy");
+        };
 
-            btn.textContent = "Copied ✓";
+        // Copy Course Link
+        card.querySelector(".copy-course").onclick = (e) => {
 
-            setTimeout(() => {
+            copyToClipboard(courseLink, e.target, "Copy Course");
 
-                btn.textContent = "Copy Link";
+        };
 
-            }, 1000);
+        // Copy Modules Link
+        card.querySelector(".copy-module").onclick = (e) => {
+
+            copyToClipboard(moduleLink, e.target, "Copy Modules");
 
         };
 
@@ -129,5 +142,19 @@ function render(list) {
     });
 
     results.appendChild(fragment);
+
+}
+
+function copyToClipboard(text, button, originalText) {
+
+    navigator.clipboard.writeText(text);
+
+    button.textContent = "✅ Copied";
+
+    setTimeout(() => {
+
+        button.textContent = originalText;
+
+    }, 1000);
 
 }
