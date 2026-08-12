@@ -104,10 +104,10 @@ function render(list) {
         `;
 
         const courseLink =
-            `https://nculms.ncuindia.edu/courses/${course.id}`;
+            `https://nculms.canplus.io/courses/${course.id}`;
 
         const moduleLink =
-            `https://nculms.ncuindia.edu/courses/${course.id}/modules`;
+            `https://nculms.canplus.io/courses/${course.id}/modules`;
 
         // Open Course
         card.querySelector(".open").onclick = () => {
