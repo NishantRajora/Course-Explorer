@@ -105,6 +105,7 @@ function render(list) {
 
         const courseLink =
             `https://nculms.canplus.io/courses/${course.id}`;
+        
 
         const moduleLink =
             `https://nculms.canplus.io/courses/${course.id}/modules`;
